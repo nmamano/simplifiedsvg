@@ -1,0 +1,150 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  list-style: none;
+}
+ul {
+  list-style: none;
+}
+li {
+  padding-top: 0.7rem;
+  padding-bottom: 0.7rem;
+}
+button {
+  cursor: pointer;
+  /* outline: none; */
+  /* border: none; */
+  /* background-color: inherit; */
+}
+p {
+  text-align: left;
+}
+/* anchors */
+a {
+  outline: none;
+  text-decoration: none;
+  padding: 2px 1px;
+}
+a:hover,
+a:focus {
+  border-bottom: 1px solid;
+  padding-bottom: 1px;
+  background: var(--anchor-bg-color);
+}
+
+.aspect-ratio-box {
+  height: 0;
+  overflow: hidden;
+  padding-top: 100%;
+  position: relative;
+}
+.aspect-ratio-box-inside {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+  width: 100%;
+  height: 100%;
+  line-height: 1.2em;
+  background-color: rgb(240, 246, 254);
+  display: grid;
+  grid-gap: 0em;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    "headerArea exportButton"
+    "inputArea drawArea"
+    "infoArea infoArea";
+}
+
+#headerSection {
+  grid-area: headerArea;
+  margin-top: 0.4rem;
+  margin-bottom: 0.4rem;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+#headerSection h1 {
+  margin: 1rem;
+  margin-left: 1.5rem;
+}
+#headerSection p {
+  margin: 1rem 1rem 1rem 1.5rem;
+}
+
+#exportSection {
+  grid-area: exportButton;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+#exportSection button {
+  margin: 1rem;
+  padding: 0.2rem;
+  left: 0;
+  bottom: 0;
+}
+
+#drawSection {
+  grid-area: drawArea;
+}
+#drawRegion {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  border:black 1px solid;
+}
+#drawCanvas {
+  width: 100%;
+  height: 100%;
+  background-color: white;
+}
+
+#inputSection {
+  grid-area: inputArea;
+}
+#inputRegion {
+  width: 100%;
+  height: 100%;
+}
+#inputField {
+  width: 100%;
+  height: 100%;
+  resize: none;
+  vertical-align: top;
+}
+
+#infoSection {
+  grid-area: infoArea;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+#infoSection .infoBlock {
+  display: block;
+  padding: 1rem;
+  min-width: 22rem;
+  max-width: 100%;
+}
+
+#infoSection h3 {
+  margin: 0.5rem;
+  margin-left: 0rem;
+}
+
+#infoSection p {
+  margin-top: 0.4rem;
+  margin-bottom: 0.4rem;
+}
+
+#infoSection .primitive {
+  margin-bottom: 0.1rem;
+}

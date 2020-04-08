@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>SimplifiedSVG Sandbox</title>
+  <meta charset="utf-8">
+  <meta name="author" content="Nil Mamano">
+  <meta name="description" content="Simplified SVG Sandbox">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="style.css" rel="stylesheet">
+</head>
+
+
+<body>
+  <section id="headerSection">
+    <h1><a href="https://github.com/nmamano/simplifiedsvg">SimplifiedSVG</a> Sandbox</h1>
+  </section>
+
+  <section id="exportSection">
+    <button type="button" onclick="exportPng()">Export PNG</button>
+    <button type="button" id="svgButton" onclick="exportSvg()">Export SVG</button>
+  </section>
+
+  <section id="drawSection">
+    <div class="aspect-ratio-box">
+      <div id="drawRegion" class="aspect-ratio-box-inside">
+        <div id="drawCanvas"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="inputSection">
+    <div class="aspect-ratio-box">
+      <div id="inputRegion" class="aspect-ratio-box-inside">
+        <textarea autofocus id="inputField" oninput="drawPrimitivesOnCanvas()">
+Write primitives as JSON objects here (text not in brackets is ignored)
+
+{primitive: "segment", x1: 15, y1: 5, x2: 25, y2: 15}
+{primitive: "segment", x1: 15, y1: 15, x2: 25, y2: 25, thickness: 4, color: "blue"}
+{primitive: "ray", x1: 15, y1: 25, x2: 25, y2: 35, thickness: 2}
+{primitive: "line", x1: 15, y1: 35, x2: 25, y2: 45, thickness: 1}
+{primitive: "arrow", x1: 15, y1: 45, x2: 25, y2: 55}
+{primitive: "double_arrow", x1: 15, y1: 55, x2: 25, y2: 65, thickness: 2, arrow_head_size: 2, color: "purple"}
+{primitive: "rectangle", xmin: 55, ymin: 5, xmax: 75, ymax: 25}
+{primitive: "circle", x: 85, y: 15, radius: 12, color: "lime", thickness: 4}
+{primitive: "rectangle", xmin: 75, ymin: 25, xmax: 95, ymax: 45, color: "red", fill_color: "lightgray", thickness: 5}
+{primitive: "circle", x: 65, y: 35.85, radius: 11, thickness: 5, color: "orange", fill_color: "darkblue"}
+{primitive: "segment", x1: 55, y1: 25, x2: 73, y2: 25}</textarea>
+      </div>
+    </div>
+  </section>
+
+  <section id="infoSection">
+    <div class="infoBlock">
+      <h3>Primitives and required attributes:</h3>
+      <p>All coordinates must be between 0 and 100.</p>
+      <div class="primitive"><b>segment:</b> x1, y1, x2, y2</div>
+      <div class="primitive"><b>ray:</b> x1, y1, x2, y2</div>
+      <div class="primitive"><b>line:</b> x1, y1, x2, y2</div>
+      <div class="primitive"><b>arrow:</b> x1, y1, x2, y2</div>
+      <div class="primitive"><b>double_arrow:</b> x1, y1, x2, y2</div>
+      <div class="primitive"><b>rectangle:</b> xmin, ymin, xmax, ymax</div>
+      <div class="primitive"><b>circle:</b> x, y, radius</div>
+    </div>
+    <div class="infoBlock">
+      <h3>Optional attributes:</h3>
+      <p>Default values are shown in parenthesis.</p>
+      <div class="primitive"><b>color:</b> <em>(black)</em></div>
+      <div class="primitive"><b>fill_color:</b> <em>(none)</em></div>
+      <div class="primitive"><b>thickness:</b> between 1 and 10 <em>(3)</em></div>
+      <div class="primitive"><b>opacity:</b> between 0 and 1 <em>(1)</em></div>
+      <div class="primitive"><b>dash_style:</b> solid / dashed / dotted <em>(solid)</em> </div>
+      <div class="primitive"><b>linecap:</b> butt / round <em>(butt)</em></div>
+      <div class="primitive"><b>arrow_head_size:</b> between 1 and 10 <em>(3)</em></div>
+    </div>
+
+    <div class="infoBlock">
+      <h3>Usage</h3>
+      <p><b>Format:</b> for more on the syntax of the primitives, see the <a href="https://github.com/nmamano/simplifiedsvg">README</a> on github.</p>
+      <p><b>Editor:</b> changes are displayed in real time.
+        Control+Z and Control+Y (or equivalents) can be used to undo/redo changes.
+        If you refresh or return to the page, the last drawing is restored (no guarantees though).</p>
+      <p>Images can be saved as PNG by clicking Export (if it doesn't work, try Chrome or Firefox)</p>
+    </div>
+
+    <div class="infoBlock">
+      <h3>About</h3>
+      <p>Sandbox for testing the <b>simplifiedsvg</b> utility.
+        It converts geometric primitives in JSON format to the SVG specification ready to be displayed in a browser.
+        The sandbox is not intended for mobile browsers. 
+        Created by <a href="http://nmamano.com/">Nil Mamano</a>.
+      </p>  
+    </div>
+
+    <div class="infoBlock">
+      <h3>Example 1 (illustrating commands)</h3>
+      <p>
+{primitive: "segment", x1: 15, y1: 5, x2: 25, y2: 15}<br>
+{primitive: "segment", x1: 15, y1: 15, x2: 25, y2: 25, thickness: 4, color: "blue"}<br>
+{primitive: "ray", x1: 15, y1: 25, x2: 25, y2: 35, thickness: 2}<br>
+{primitive: "line", x1: 15, y1: 35, x2: 25, y2: 45, thickness: 1}<br>
+{primitive: "arrow", x1: 15, y1: 45, x2: 25, y2: 55}<br>
+{primitive: "double_arrow", x1: 15, y1: 55, x2: 25, y2: 65, thickness: 2, arrow_head_size: 2, color: "purple"}<br>
+{primitive: "rectangle", xmin: 55, ymin: 5, xmax: 75, ymax: 25}<br>
+{primitive: "circle", x: 85, y: 15, radius: 12, color: "lime", thickness: 4}<br>
+{primitive: "rectangle", xmin: 75, ymin: 25, xmax: 95, ymax: 45, color: "red", fill_color: "lightgray", thickness: 5}<br>
+{primitive: "circle", x: 65, y: 35.85, radius: 11, thickness: 5, color: "orange", fill_color: "darkblue"}<br>
+{primitive: "segment", x1: 55, y1: 25, x2: 73, y2: 25}
+      </p>
+    </div>
+    <!-- <div class="infoBlock">
+      <h3>Example 2</h3>
+      <p>
+        todo
+      </p>
+    </div> -->
+  </section>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0/dist/svg.min.js"></script>
+  <script src="https://combinatronics.com/exupero/saveSvgAsPng/gh-pages/src/saveSvgAsPng.js"></script>
+  <script src="simplifiedsvg.js"></script>
+  <script src="sandbox.js"></script>
+</body>
+
+</html>
