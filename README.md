@@ -5,7 +5,7 @@ Draw geometric primitives (lines, circles, ...) on the browser in SVG format. Ex
 ## Sandbox / Demo
 
 See what it is about:
-http://nmamano.com/simplifiedsvgsandbox/
+http://nmamano.com/simplifiedsvgs/
 
 ## Installation / Usage / API
 
