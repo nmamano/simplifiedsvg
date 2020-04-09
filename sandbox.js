@@ -15,20 +15,20 @@ function saveInputField() {
 //wrappers around SimplifiedSVG calls
 function exportSvg() {
   const primListText = document.getElementById(inputFieldId).value;
-  exportPrimitives(primListText, "svg", "diagram.svg");
+  exportPrimitives(primListText, "svg", "sandbox_drawing.svg");
 }
 function exportPng() {
   const primListText = document.getElementById(inputFieldId).value;
-  exportPrimitives(primListText, "png", "diagram.png");
+  exportPrimitives(primListText, "png", "sandbox_drawing.png");
 }
 function drawPrimitivesOnCanvas() {
   saveInputField();
   const primListText = document.getElementById(inputFieldId).value;
-  const divXml = primitivesAsSVG(primListText);
-  $('#drawCanvas').html(divXml);
+  const svgXml = primitivesToSvg(primListText);
+  $('#drawCanvas').html(svgXml);
 }
 
-$( document ).ready(function() {
+$(document).ready(function() {
   loadInputField();
   drawPrimitivesOnCanvas();
 });

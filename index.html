@@ -36,16 +36,23 @@
 Write primitives as JSON objects here (text not in brackets is ignored)
 
 {primitive: "segment", x1: 15, y1: 5, x2: 25, y2: 15}
-{primitive: "segment", x1: 15, y1: 15, x2: 25, y2: 25, thickness: 4, color: "blue"}
-{primitive: "ray", x1: 15, y1: 25, x2: 25, y2: 35, thickness: 2}
-{primitive: "line", x1: 15, y1: 35, x2: 25, y2: 45, thickness: 1}
-{primitive: "arrow", x1: 15, y1: 45, x2: 25, y2: 55}
-{primitive: "double_arrow", x1: 15, y1: 55, x2: 25, y2: 65, thickness: 2, arrow_head_size: 2, color: "purple"}
+{primitive: "segment", x1: 15, y1: 15, x2: 25, y2: 25, color: "blue", linecap: "round"}
+{primitive: "ray", x1: 15, y1: 25, x2: 25, y2: 35, stroke_width: 0.5}
+{primitive: "line", x1: 1, y1: 90, x2: 2, y2: 90, stroke_width: 0.2, stroke_dash: 1}
+{primitive: "arrow", x1: 10, y1: 80, x2: 25, y2: 80, stroke_width: 2, arrow_head_size: 5}
+{primitive: "arrow", x1: 11, y1: 86, x2: 25, y2: 86, stroke_width: 2, arrow_head_size: 5, linecap: "round"}
+{primitive: "double_arrow", x1: 15, y1: 55, x2: 25, y2: 65, stroke_width: 1.2, arrow_head_size: 5, color: "purple"}
 {primitive: "rectangle", xmin: 55, ymin: 5, xmax: 75, ymax: 25}
-{primitive: "circle", x: 85, y: 15, radius: 12, color: "lime", thickness: 4}
-{primitive: "rectangle", xmin: 75, ymin: 25, xmax: 95, ymax: 45, color: "red", fill_color: "lightgray", thickness: 5}
-{primitive: "circle", x: 65, y: 35.85, radius: 11, thickness: 5, color: "orange", fill_color: "darkblue"}
-{primitive: "segment", x1: 55, y1: 25, x2: 73, y2: 25}</textarea>
+{primitive: "circle", x: 85, y: 15, radius: 12, color: "lime", stroke_width: 1.5}
+{primitive: "rectangle", xmin: 75, ymin: 25, xmax: 95, ymax: 45, color: "red", fill_color: "lightgray", stroke_width: 2.5}
+{primitive: "circle", x: 65, y: 35.85, radius: 11, stroke_width: 2.2, color: "orange", fill_color: "darkblue", opacity: 0.8}
+{primitive: "segment", x1: 55, y1: 25, x2: 73, y2: 25}
+{primitive: "point", x: 50, y: 50}
+{primitive: "point", x: 55, y: 55, stroke_width: 2, color: "red"}
+{primitive: "rectangle", xmin: 60, ymin: 60, xmax: 80, ymax: 80, color: "red", fill_color: "yellow"} 
+{primitive: "rectangle", xmin: 60, ymin: 60, xmax: 80, ymax: 80, color: "blue", stroke_dash: 3}
+{primitive: "circle", x: 70, y: 70, radius: 11.5, color: "none", fill_color: "green", opacity: 0.4} 
+</textarea>
       </div>
     </div>
   </section>
@@ -53,25 +60,22 @@ Write primitives as JSON objects here (text not in brackets is ignored)
   <section id="infoSection">
     <div class="infoBlock">
       <h3>Primitives and required attributes:</h3>
-      <p>All coordinates must be between 0 and 100.</p>
-      <div class="primitive"><b>segment:</b> x1, y1, x2, y2</div>
-      <div class="primitive"><b>ray:</b> x1, y1, x2, y2</div>
-      <div class="primitive"><b>line:</b> x1, y1, x2, y2</div>
-      <div class="primitive"><b>arrow:</b> x1, y1, x2, y2</div>
-      <div class="primitive"><b>double_arrow:</b> x1, y1, x2, y2</div>
+      <p>The canvas coordinates go from 0 to 100.</p>
+      <div class="primitive"><b>point:</b> x, y</div>
+      <div class="primitive"><b>segment / ray / line:</b> x1, y1, x2, y2</div>
+      <div class="primitive"><b>arrow / double_arrow:</b> x1, y1, x2, y2</div>
       <div class="primitive"><b>rectangle:</b> xmin, ymin, xmax, ymax</div>
       <div class="primitive"><b>circle:</b> x, y, radius</div>
     </div>
     <div class="infoBlock">
-      <h3>Optional attributes:</h3>
-      <p>Default values are shown in parenthesis.</p>
-      <div class="primitive"><b>color:</b> <em>(black)</em></div>
-      <div class="primitive"><b>fill_color:</b> <em>(none)</em></div>
-      <div class="primitive"><b>thickness:</b> between 1 and 10 <em>(3)</em></div>
-      <div class="primitive"><b>opacity:</b> between 0 and 1 <em>(1)</em></div>
-      <div class="primitive"><b>dash_style:</b> solid / dashed / dotted <em>(solid)</em> </div>
-      <div class="primitive"><b>linecap:</b> butt / round <em>(butt)</em></div>
-      <div class="primitive"><b>arrow_head_size:</b> between 1 and 10 <em>(3)</em></div>
+      <h3>Optional attributes and their default values:</h3>
+      <div class="primitive"><b>color:</b> black</div>
+      <div class="primitive"><b>fill_color:</b> none</div>
+      <div class="primitive"><b>opacity:</b> 1</div>
+      <div class="primitive"><b>stroke_width:</b> 0.7 (the thickness of the lines)</div>
+      <div class="primitive"><b>stroke_dash:</b> 0 (for dashed lines. 0 is for solid lines)</div>
+      <div class="primitive"><b>linecap:</b> butt (endpoint look. Can also be <q>round</q>)</div>
+      <div class="primitive"><b>arrow_head_size:</b> 3.5</div>
     </div>
 
     <div class="infoBlock">
@@ -85,27 +89,33 @@ Write primitives as JSON objects here (text not in brackets is ignored)
 
     <div class="infoBlock">
       <h3>About</h3>
-      <p>Sandbox for testing the <b>simplifiedsvg</b> utility.
-        It converts geometric primitives in JSON format to the SVG specification ready to be displayed in a browser.
-        The sandbox is not intended for mobile browsers. 
+      <p>Sandbox for testing the <a href="https://github.com/nmamano/simplifiedsvg"><b>SimplifiedSVG</b></a> utility.
+        It converts geometric primitives, in JSON format, to SVG, which can be displayed in the browser.
+        This sandbox is not intended for mobile browsers. The Export button may not work on some browser (try Chorme or Firefox).
         Created by <a href="http://nmamano.com/">Nil Mamano</a>.
       </p>  
     </div>
 
     <div class="infoBlock">
-      <h3>Example 1 (illustrating commands)</h3>
+      <h3>Example 1 (testing)</h3>
       <p>
-{primitive: "segment", x1: 15, y1: 5, x2: 25, y2: 15}<br>
-{primitive: "segment", x1: 15, y1: 15, x2: 25, y2: 25, thickness: 4, color: "blue"}<br>
-{primitive: "ray", x1: 15, y1: 25, x2: 25, y2: 35, thickness: 2}<br>
-{primitive: "line", x1: 15, y1: 35, x2: 25, y2: 45, thickness: 1}<br>
-{primitive: "arrow", x1: 15, y1: 45, x2: 25, y2: 55}<br>
-{primitive: "double_arrow", x1: 15, y1: 55, x2: 25, y2: 65, thickness: 2, arrow_head_size: 2, color: "purple"}<br>
-{primitive: "rectangle", xmin: 55, ymin: 5, xmax: 75, ymax: 25}<br>
-{primitive: "circle", x: 85, y: 15, radius: 12, color: "lime", thickness: 4}<br>
-{primitive: "rectangle", xmin: 75, ymin: 25, xmax: 95, ymax: 45, color: "red", fill_color: "lightgray", thickness: 5}<br>
-{primitive: "circle", x: 65, y: 35.85, radius: 11, thickness: 5, color: "orange", fill_color: "darkblue"}<br>
-{primitive: "segment", x1: 55, y1: 25, x2: 73, y2: 25}
+{primitive: "segment", x1: 15, y1: 5, x2: 25, y2: 15}</br>
+{primitive: "segment", x1: 15, y1: 15, x2: 25, y2: 25, color: "blue", linecap: "round"}</br>
+{primitive: "ray", x1: 15, y1: 25, x2: 25, y2: 35, stroke_width: 0.5}</br>
+{primitive: "line", x1: 1, y1: 90, x2: 2, y2: 90, stroke_width: 0.2, stroke_dash: 1}</br>
+{primitive: "arrow", x1: 10, y1: 80, x2: 25, y2: 80, stroke_width: 2, arrow_head_size: 5}</br>
+{primitive: "arrow", x1: 11, y1: 86, x2: 25, y2: 86, stroke_width: 2, arrow_head_size: 5, linecap: "round"}</br>
+{primitive: "double_arrow", x1: 15, y1: 55, x2: 25, y2: 65, stroke_width: 1.2, arrow_head_size: 5, color: "purple"}</br>
+{primitive: "rectangle", xmin: 55, ymin: 5, xmax: 75, ymax: 25}</br>
+{primitive: "circle", x: 85, y: 15, radius: 12, color: "lime", stroke_width: 1.5}</br>
+{primitive: "rectangle", xmin: 75, ymin: 25, xmax: 95, ymax: 45, color: "red", fill_color: "lightgray", stroke_width: 2.5}</br>
+{primitive: "circle", x: 65, y: 35.85, radius: 11, stroke_width: 2.2, color: "orange", fill_color: "darkblue", opacity: 0.8}</br>
+{primitive: "segment", x1: 55, y1: 25, x2: 73, y2: 25}</br>
+{primitive: "point", x: 50, y: 50}</br>
+{primitive: "point", x: 55, y: 55, stroke_width: 2, color: "red"}</br>
+{primitive: "rectangle", xmin: 60, ymin: 60, xmax: 80, ymax: 80, color: "red", fill_color: "yellow"} </br>
+{primitive: "rectangle", xmin: 60, ymin: 60, xmax: 80, ymax: 80, color: "blue", stroke_dash: 3}</br>
+{primitive: "circle", x: 70, y: 70, radius: 11.5, color: "none", fill_color: "green", opacity: 0.4}
       </p>
     </div>
     <!-- <div class="infoBlock">
