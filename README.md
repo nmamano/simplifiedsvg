@@ -5,7 +5,7 @@ Draw geometric primitives (lines, circles, ...) on the browser in SVG format. Ex
 ## Sandbox / Demo
 
 See what it is about:
-http://nmamano.com/simplifiedsvgs/
+http://nmamano.com/simplifiedsvg/
 
 ## Installation / Usage / API
 
@@ -63,6 +63,7 @@ If an optional parameter is not given, the default values below are used.
 - `stroke_dash: 0`. Establishes the length of the dashes in a dashed line (`- - -`). A `0` means solid line. Small values can be used to create dotted lines.
 - `linecap: "butt"`. Style for line endpoints. `"butt"` means flat. It can also be `"round"`.
 - `arrow_head_size: 3.5`. Only relevant for arrows.
+- `rotation: 0`. A number between 0 and 360.
 
 The names are borrowed from SVG when possible for consistency, but it is not a 1-to-1 match. By design choice to keep the primitives self-contained, the default values cannot be modified.
 

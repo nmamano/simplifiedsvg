@@ -41,11 +41,12 @@
   var optionalAttributes = {
     color: attrTypes.color('black'),
     fill_color: attrTypes.color('none'),
-    stroke_width: attrTypes.numeric(0.7, 0.0001, userSpaceSize),
+    stroke_width: attrTypes.numeric(0.2, 0.0001, userSpaceSize),
     opacity: attrTypes.numeric(1, 0, 1),
     arrow_head_size: attrTypes.numeric(3.5, 0.0001, userSpaceSize),
     stroke_dash: attrTypes.numeric(0, 0, 10),
-    linecap: attrTypes.choice('butt', ['butt', 'round', 'square'])
+    linecap: attrTypes.choice('butt', ['butt', 'round', 'square']),
+    rotation: attrTypes.numeric(0, 0, 360)
   }
   
   /*primitive defintions
@@ -88,7 +89,7 @@
     let [x1, y1, x2, y2] = [obj.x1, obj.y1, obj.x2, obj.y2];
     let [vx, vy] = [x2 - x1, y2 - y1];
     [obj.x2, obj.y2] = primitives.ray.moveBeyondVisible(x2, y2, vx, vy);
-    DrawUtils.drawSegment(svgCanvas, obj);
+    DrawUtils.drawRay(svgCanvas, obj);
   }
   primitives.line = {...primitives.segment};
   primitives.line.drawOn = (svgCanvas, obj) => {
@@ -141,16 +142,19 @@
   
     drawSegment: (svgCanvas, obj) => {
       var seg = svgCanvas.line(obj.x1, obj.y1, obj.x2, obj.y2);
-      seg.stroke({
-        width: obj.stroke_width, color: obj.color, linecap: obj.linecap, opacity: obj.opacity, dasharray: [obj.stroke_dash]
-      });
+      DrawUtils.addCommonAttr(seg, obj);
+    },
+  
+    drawRay: (svgCanvas, obj) => {
+      var ray = svgCanvas.line(obj.x1, obj.y1, obj.x2, obj.y2);
+      let rot = obj.rotation;
+      obj.rotation = 0;
+      DrawUtils.addCommonAttr(ray, obj);
+      ray.rotate(rot, obj.x1, obj.y1); //rotate over the origin
     },
   
     drawArrow: (svgCanvas, obj) => {
       var body = svgCanvas.line(obj.x1, obj.y1, obj.x2, obj.y2);
-      body.stroke({
-        width: obj.stroke_width, color: obj.color, linecap: obj.linecap, opacity: obj.opacity, dasharray: [obj.stroke_dash]
-      });
       body.marker('end', 5, 10, function(add) {
         add.path("M 0 0 L 10 5 L 0 10 z"); //isoceles triangle
         this.attr({
@@ -159,17 +163,15 @@
           markerUnits: "userSpaceOnUse",
           markerWidth: obj.arrow_head_size, markerHeight: obj.arrow_head_size,
           orient: "auto-start-reverse",
-          opacity: obj.opacity
         });
         this.fill(obj.color);
       });
+      DrawUtils.addCommonAttr(body, obj);
     },
   
     drawCircle: (svgCanvas, obj) => {
       var circ = svgCanvas.circle(2*obj.radius).center(obj.x,obj.y);
-      circ.attr({
-        fill:obj.fill_color, 'stroke-width': obj.stroke_width, stroke: obj.color, opacity: obj.opacity, 'stroke-dasharray': [obj.stroke_dash]
-      });
+      DrawUtils.addCommonAttr(circ, obj);
     },
   
     drawRect: (svgCanvas, obj) => {
@@ -177,9 +179,13 @@
       let rw = obj.xmax-obj.xmin;
       let rh = obj.ymax-obj.ymin;
       let rect = svgCanvas.rect(rw,rh).move(obj.xmin,obj.ymin);
-      rect.attr({
-        fill: obj.fill_color, 'stroke-width': obj.stroke_width, stroke: obj.color, opacity: obj.opacity, 'stroke-dasharray': [obj.stroke_dash]
-      });
+      DrawUtils.addCommonAttr(rect, obj);
+    },
+
+    addCommonAttr: (figure, obj) => {
+      figure.stroke({width: obj.stroke_width, color: obj.color, linecap: obj.linecap, dasharray: [obj.stroke_dash]});
+      figure.attr({fill:obj.fill_color, opacity: obj.opacity});
+      figure.rotate(obj.rotation);
     }
   }
   

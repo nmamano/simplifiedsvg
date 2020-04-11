@@ -35,23 +35,27 @@
         <textarea autofocus id="inputField" oninput="drawPrimitivesOnCanvas()">
 Write primitives as JSON objects here (text not in brackets is ignored)
 
-{primitive: "segment", x1: 15, y1: 5, x2: 25, y2: 15}
-{primitive: "segment", x1: 15, y1: 15, x2: 25, y2: 25, color: "blue", linecap: "round"}
-{primitive: "ray", x1: 15, y1: 25, x2: 25, y2: 35, stroke_width: 0.5}
-{primitive: "line", x1: 1, y1: 90, x2: 2, y2: 90, stroke_width: 0.2, stroke_dash: 1}
-{primitive: "arrow", x1: 10, y1: 80, x2: 25, y2: 80, stroke_width: 2, arrow_head_size: 5}
-{primitive: "arrow", x1: 11, y1: 86, x2: 25, y2: 86, stroke_width: 2, arrow_head_size: 5, linecap: "round"}
-{primitive: "double_arrow", x1: 15, y1: 55, x2: 25, y2: 65, stroke_width: 1.2, arrow_head_size: 5, color: "purple"}
-{primitive: "rectangle", xmin: 55, ymin: 5, xmax: 75, ymax: 25}
-{primitive: "circle", x: 85, y: 15, radius: 12, color: "lime", stroke_width: 1.5}
-{primitive: "rectangle", xmin: 75, ymin: 25, xmax: 95, ymax: 45, color: "red", fill_color: "lightgray", stroke_width: 2.5}
-{primitive: "circle", x: 65, y: 35.85, radius: 11, stroke_width: 2.2, color: "orange", fill_color: "darkblue", opacity: 0.8}
-{primitive: "segment", x1: 55, y1: 25, x2: 73, y2: 25}
-{primitive: "point", x: 50, y: 50}
-{primitive: "point", x: 55, y: 55, stroke_width: 2, color: "red"}
-{primitive: "rectangle", xmin: 60, ymin: 60, xmax: 80, ymax: 80, color: "red", fill_color: "yellow"} 
-{primitive: "rectangle", xmin: 60, ymin: 60, xmax: 80, ymax: 80, color: "blue", stroke_dash: 3}
-{primitive: "circle", x: 70, y: 70, radius: 11.5, color: "none", fill_color: "green", opacity: 0.4} 
+{primitive: "rectangle", xmin: 5, ymin: 5, xmax: 90, ymax: 90}
+{primitive: "segment", x1: 5, y1: 39, x2: 90, y2: 39}
+{primitive: "segment", x1: 56, y1: 90, x2: 56, y2: 5}
+{primitive: "rectangle", xmin: 39, ymin: 5, xmax: 56, ymax: 22, fill_color: "seagreen"}
+{primitive: "rectangle", xmin: 39, ymin: 22, xmax: 56, ymax: 39, fill_color: "mediumseagreen"}
+{primitive: "rectangle", xmin: 56, ymin: 73, xmax: 73, ymax: 90, fill_color: "seagreen"}
+{primitive: "rectangle", xmin: 73, ymin: 73, xmax: 90, ymax: 90,fill_color: "mediumaquamarine"}
+{primitive: "rectangle", xmin: 22, ymin: 56, xmax: 39, ymax: 73,fill_color: "seagreen"}
+{primitive: "segment", x1: 5, y1: 56, x2: 90, y2: 13.5}
+{primitive: "segment", x1: 5, y1: 30.5, x2: 39, y2: 13.5}
+{primitive: "segment", x1: 13.5, y1: 5, x2: 30.5, y2: 39}
+{primitive: "segment", x1: 81.5, y1: 39, x2: 64.5, y2: 5}
+{primitive: "segment", x1: 64.5, y1: 39, x2: 81.5, y2: 73}
+{primitive: "segment", x1: 90, y1: 47.5, x2: 56, y2: 64.5}
+{primitive: "segment", x1: 56, y1: 73, x2: 39, y2: 39}
+{primitive: "segment", x1: 56, y1: 73, x2: 22, y2: 90}
+{primitive: "segment", x1: 5, y1: 56, x2: 22, y2: 90}
+{primitive: "segment", x1: 39, y1: 56, x2: 47.5, y2: 56}
+{primitive: "segment", x1: 22, y1: 56, x2: 22, y2: 47.5}
+{primitive: "segment", x1: 13.5, y1: 73, x2: 22, y2: 73}
+{primitive: "segment", x1: 39, y1: 81.5, x2: 39, y2: 73}
 </textarea>
       </div>
     </div>
@@ -76,6 +80,7 @@ Write primitives as JSON objects here (text not in brackets is ignored)
       <div class="primitive"><b>stroke_dash:</b> 0 (for dashed lines. 0 is for solid lines)</div>
       <div class="primitive"><b>linecap:</b> butt (endpoint look. Can also be <q>round</q>)</div>
       <div class="primitive"><b>arrow_head_size:</b> 3.5</div>
+      <div class="primitive"><b>rotation:</b> 0 (between 0 and 360)</div>
     </div>
 
     <div class="infoBlock">
@@ -101,11 +106,12 @@ Write primitives as JSON objects here (text not in brackets is ignored)
       <p>
 {primitive: "segment", x1: 15, y1: 5, x2: 25, y2: 15}</br>
 {primitive: "segment", x1: 15, y1: 15, x2: 25, y2: 25, color: "blue", linecap: "round"}</br>
-{primitive: "ray", x1: 15, y1: 25, x2: 25, y2: 35, stroke_width: 0.5}</br>
+{primitive: "ray", x1: 15, y1: 25, x2: 25, y2: 35, stroke_width: 0.5, rotation: 21}</br>
+{primitive: "ray", x1: 15, y1: 25, x2: 25, y2: 35, stroke_width: 0.5, rotation: 26}</br>
 {primitive: "line", x1: 1, y1: 90, x2: 2, y2: 90, stroke_width: 0.2, stroke_dash: 1}</br>
 {primitive: "arrow", x1: 10, y1: 80, x2: 25, y2: 80, stroke_width: 2, arrow_head_size: 5}</br>
 {primitive: "arrow", x1: 11, y1: 86, x2: 25, y2: 86, stroke_width: 2, arrow_head_size: 5, linecap: "round"}</br>
-{primitive: "double_arrow", x1: 15, y1: 55, x2: 25, y2: 65, stroke_width: 1.2, arrow_head_size: 5, color: "purple"}</br>
+{primitive: "double_arrow", x1: 15, y1: 55, x2: 25, y2: 65, stroke_width: 1.2, arrow_head_size: 5, color: "purple", rotation: 45}</br>
 {primitive: "rectangle", xmin: 55, ymin: 5, xmax: 75, ymax: 25}</br>
 {primitive: "circle", x: 85, y: 15, radius: 12, color: "lime", stroke_width: 1.5}</br>
 {primitive: "rectangle", xmin: 75, ymin: 25, xmax: 95, ymax: 45, color: "red", fill_color: "lightgray", stroke_width: 2.5}</br>
@@ -113,9 +119,10 @@ Write primitives as JSON objects here (text not in brackets is ignored)
 {primitive: "segment", x1: 55, y1: 25, x2: 73, y2: 25}</br>
 {primitive: "point", x: 50, y: 50}</br>
 {primitive: "point", x: 55, y: 55, stroke_width: 2, color: "red"}</br>
-{primitive: "rectangle", xmin: 60, ymin: 60, xmax: 80, ymax: 80, color: "red", fill_color: "yellow"} </br>
-{primitive: "rectangle", xmin: 60, ymin: 60, xmax: 80, ymax: 80, color: "blue", stroke_dash: 3}</br>
-{primitive: "circle", x: 70, y: 70, radius: 11.5, color: "none", fill_color: "green", opacity: 0.4}
+{primitive: "rectangle", xmin: 60, ymin: 60, xmax: 80, ymax: 80, color: "red", fill_color: "yellow", rotation: 45}</br>
+{primitive: "rectangle", xmin: 60, ymin: 60, xmax: 80, ymax: 80, color: "blue", stroke_dash: 3, rotation: 0}</br>
+{primitive: "circle", x: 70, y: 70, radius: 11.5, color: "none", fill_color: "green", opacity: 0.3}</br>
+{primitive: "segment", x1: 55, y1:75, x2: 85, y2: 75, opacity: 0.2}
       </p>
     </div>
     <!-- <div class="infoBlock">
