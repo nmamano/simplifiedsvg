@@ -70,6 +70,7 @@ Write primitives as JSON objects here (text not in brackets is ignored)
       <div class="primitive"><b>arrow / double_arrow:</b> x1, y1, x2, y2</div>
       <div class="primitive"><b>rectangle:</b> xmin, ymin, xmax, ymax</div>
       <div class="primitive"><b>circle:</b> x, y, radius</div>
+      <div class="primitive"><b>triangle:</b> x1, y1, x2, y2, x3, y3</div>
     </div>
     <div class="infoBlock">
       <h3>Optional attributes and their default values:</h3>
@@ -104,25 +105,27 @@ Write primitives as JSON objects here (text not in brackets is ignored)
     <div class="infoBlock">
       <h3>Example 1 (testing)</h3>
       <p>
-{primitive: "segment", x1: 15, y1: 5, x2: 25, y2: 15}</br>
-{primitive: "segment", x1: 15, y1: 15, x2: 25, y2: 25, color: "blue", linecap: "round"}</br>
-{primitive: "ray", x1: 15, y1: 25, x2: 25, y2: 35, stroke_width: 0.5, rotation: 21}</br>
-{primitive: "ray", x1: 15, y1: 25, x2: 25, y2: 35, stroke_width: 0.5, rotation: 26}</br>
-{primitive: "line", x1: 1, y1: 90, x2: 2, y2: 90, stroke_width: 0.2, stroke_dash: 1}</br>
-{primitive: "arrow", x1: 10, y1: 80, x2: 25, y2: 80, stroke_width: 2, arrow_head_size: 5}</br>
-{primitive: "arrow", x1: 11, y1: 86, x2: 25, y2: 86, stroke_width: 2, arrow_head_size: 5, linecap: "round"}</br>
-{primitive: "double_arrow", x1: 15, y1: 55, x2: 25, y2: 65, stroke_width: 1.2, arrow_head_size: 5, color: "purple", rotation: 45}</br>
-{primitive: "rectangle", xmin: 55, ymin: 5, xmax: 75, ymax: 25}</br>
-{primitive: "circle", x: 85, y: 15, radius: 12, color: "lime", stroke_width: 1.5}</br>
-{primitive: "rectangle", xmin: 75, ymin: 25, xmax: 95, ymax: 45, color: "red", fill_color: "lightgray", stroke_width: 2.5}</br>
-{primitive: "circle", x: 65, y: 35.85, radius: 11, stroke_width: 2.2, color: "orange", fill_color: "darkblue", opacity: 0.8}</br>
-{primitive: "segment", x1: 55, y1: 25, x2: 73, y2: 25}</br>
-{primitive: "point", x: 50, y: 50}</br>
-{primitive: "point", x: 55, y: 55, stroke_width: 2, color: "red"}</br>
-{primitive: "rectangle", xmin: 60, ymin: 60, xmax: 80, ymax: 80, color: "red", fill_color: "yellow", rotation: 45}</br>
-{primitive: "rectangle", xmin: 60, ymin: 60, xmax: 80, ymax: 80, color: "blue", stroke_dash: 3, rotation: 0}</br>
-{primitive: "circle", x: 70, y: 70, radius: 11.5, color: "none", fill_color: "green", opacity: 0.3}</br>
-{primitive: "segment", x1: 55, y1:75, x2: 85, y2: 75, opacity: 0.2}
+        {primitive: "segment", x1: 15, y1: 5, x2: 25, y2: 15}</br>
+        {primitive: "segment", x1: 15, y1: 8, x2: 25, y2: 18, color: "blue", stroke_width: 0.6, linecap: "round"}</br>
+        {primitive: "ray", x1: 25, y1: 22, x2: 5, y2: 32, stroke_width: 0.5, rotation: 20, linecap: "round"}</br>
+        {primitive: "ray", x1: 25, y1: 22, x2: 5, y2: 32, stroke_width: 0.5, rotation: 30, linecap: "round"}</br>
+        {primitive: "line", x1: 1, y1: 90, x2: 2, y2: 90, stroke_width: 0.2, stroke_dash: 1}</br>
+        {primitive: "arrow", x1: 10, y1: 80, x2: 25, y2: 80, stroke_width: 2, arrow_head_size: 5}</br>
+        {primitive: "arrow", x1: 11, y1: 86, x2: 25, y2: 86, stroke_width: 2, arrow_head_size: 5, linecap: "round", opacity: 0.5}</br>
+        {primitive: "double_arrow", x1: 15, y1: 55, x2: 25, y2: 65, stroke_width: 1.2, arrow_head_size: 5, color: "purple", rotation: 45}</br>
+        {primitive: "rectangle", xmin: 55, ymin: 5, xmax: 75, ymax: 25}</br>
+        {primitive: "circle", x: 85, y: 15, radius: 12, color: "lime", stroke_width: 1.5}</br>
+        {primitive: "rectangle", xmin: 75, ymin: 25, xmax: 95, ymax: 45, color: "red", fill_color: "lightgray", stroke_width: 2.5}</br>
+        {primitive: "circle", x: 65, y: 35.85, radius: 11, stroke_width: 2.2, color: "orange", fill_color: "darkblue", opacity: 0.8}</br>
+        {primitive: "segment", x1: 55, y1: 25, x2: 73, y2: 25}</br>
+        {primitive: "point", x: 50, y: 50}</br>
+        {primitive: "point", x: 55, y: 55, stroke_width: 2, color: "red"}</br>
+        {primitive: "rectangle", xmin: 60, ymin: 60, xmax: 80, ymax: 80, color: "red", fill_color: "yellow", rotation: 45}</br>
+        {primitive: "rectangle", xmin: 60, ymin: 60, xmax: 80, ymax: 80, color: "blue", stroke_dash: 3, rotation: 0}</br>
+        {primitive: "circle", x: 70, y: 70, radius: 11.5, color: "none", fill_color: "green", opacity: 0.3}</br>
+        {primitive: "segment", x1: 55, y1:75, x2: 85, y2: 75, opacity: 0.2}</br>
+        {primitive: "triangle", x1:5,y1:35, x2:10,y2:30, x3:10,y3:35, fill_color: "cyan", color: "none"}</br>
+        {primitive: "triangle", x1:5,y1:36, x2:10,y2:36, x3:10,y3:41, fill_color: "darkcyan", color: "none"}      
       </p>
     </div>
     <!-- <div class="infoBlock">

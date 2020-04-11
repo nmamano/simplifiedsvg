@@ -76,28 +76,12 @@
   );
   //rays, lines, and _arrows are similar to segments, so we initialize them as copies and only change the drawing method
   primitives.ray = {...primitives.segment}; //spread syntax for deep copy
-  primitives.ray.moveBeyondVisible = (x, y, vx, vy) => {
-    //utility for drawing rays: moves (x,y) in direction (vx,vy) until it is beyond user space
-    isVisible = (x,y) => x >= 0 && x <= userSpaceSize && y >= 0 && y <= userSpaceSize;
-    while (isVisible(x,y)) {
-      [x,y] = [x+vx, y+vy];
-      [vx,vy] = [vx*10, vy*10]; //increase step size
-    }
-    return [x,y];
-  },
   primitives.ray.drawOn = (svgCanvas, obj) => {
-    let [x1, y1, x2, y2] = [obj.x1, obj.y1, obj.x2, obj.y2];
-    let [vx, vy] = [x2 - x1, y2 - y1];
-    [obj.x2, obj.y2] = primitives.ray.moveBeyondVisible(x2, y2, vx, vy);
     DrawUtils.drawRay(svgCanvas, obj);
   }
   primitives.line = {...primitives.segment};
   primitives.line.drawOn = (svgCanvas, obj) => {
-    let [x1, y1, x2, y2] = [obj.x1, obj.y1, obj.x2, obj.y2];
-    let [vx, vy] = [x2 - x1, y2 - y1];
-    [obj.x2, obj.y2] = primitives.ray.moveBeyondVisible(x2, y2, vx, vy);
-    [obj.x1, obj.y1] = primitives.ray.moveBeyondVisible(x1, y1, -vx, -vy);
-    DrawUtils.drawSegment(svgCanvas, obj);
+    DrawUtils.drawLine(svgCanvas, obj);
   }
   primitives.arrow = {...primitives.segment};
   primitives.arrow.drawOn = (svgCanvas, obj) => {
@@ -136,6 +120,14 @@
       DrawUtils.drawCircle(svgCanvas, obj);
     }
   );
+  primitives.triangle = new PrimitiveDef(
+    {x1: attrTypes.coord(), y1: attrTypes.coord(), x2: attrTypes.coord(), y2: attrTypes.coord(), x3: attrTypes.coord(), y3: attrTypes.coord()},
+    (obj) => (obj.x1 != obj.x2 || obj.y1 != obj.y2) && (obj.x1 != obj.x3 || obj.y1 != obj.y3) && (obj.x3 != obj.x2 || obj.y3 != obj.y2),
+    "the three points (x1,y1), (x2,y2), (x3,y3) must be different",
+    (svgCanvas, obj) => {
+      DrawUtils.drawTriangle(svgCanvas, obj);
+    }
+  )
   
   // Wrappers around SVG.js drawing functions
   var DrawUtils = {
@@ -144,13 +136,28 @@
       var seg = svgCanvas.line(obj.x1, obj.y1, obj.x2, obj.y2);
       DrawUtils.addCommonAttr(seg, obj);
     },
-  
+    
     drawRay: (svgCanvas, obj) => {
-      var ray = svgCanvas.line(obj.x1, obj.y1, obj.x2, obj.y2);
+      let [x1, y1, x2, y2] = [obj.x1, obj.y1, obj.x2, obj.y2];
+      let [vx, vy] = [x2 - x1, y2 - y1];
+      [x2, y2] = DrawUtils.moveBeyondVisible(x2, y2, vx, vy);  
+      var ray = svgCanvas.line(x1, y1, x2, y2);
       let rot = obj.rotation;
       obj.rotation = 0;
       DrawUtils.addCommonAttr(ray, obj);
-      ray.rotate(rot, obj.x1, obj.y1); //rotate over the origin
+      ray.rotate(rot, x1, y1); //rotate over the origin
+    },
+
+    drawLine: (svgCanvas, obj) => {
+      let [x1, y1, x2, y2] = [obj.x1, obj.y1, obj.x2, obj.y2];
+      let [vx, vy] = [x2 - x1, y2 - y1];
+      [x1, y1] = DrawUtils.moveBeyondVisible(x1, y1, -vx, -vy);  
+      [x2, y2] = DrawUtils.moveBeyondVisible(x2, y2, vx, vy);  
+      var ray = svgCanvas.line(x1, y1, x2, y2);
+      let rot = obj.rotation;
+      obj.rotation = 0;
+      DrawUtils.addCommonAttr(ray, obj);
+      ray.rotate(rot, (x1+x2)/2, (y1+y2)/2); //rotate over the origin
     },
   
     drawArrow: (svgCanvas, obj) => {
@@ -182,10 +189,25 @@
       DrawUtils.addCommonAttr(rect, obj);
     },
 
+    drawTriangle: (svgCanvas, obj) => {
+      var poly = svgCanvas.polygon([[obj.x1,obj.y1], [obj.x2,obj.y2], [obj.x3,obj.y3]]);
+      DrawUtils.addCommonAttr(poly, obj);
+    },
+
     addCommonAttr: (figure, obj) => {
       figure.stroke({width: obj.stroke_width, color: obj.color, linecap: obj.linecap, dasharray: [obj.stroke_dash]});
       figure.attr({fill:obj.fill_color, opacity: obj.opacity});
       figure.rotate(obj.rotation);
+    },
+
+    //utility for drawing rays: moves (x,y) in direction (vx,vy) until it is beyond user space
+    moveBeyondVisible: (x, y, vx, vy) => {
+      isVisible = (x,y) => x >= 0 && x <= userSpaceSize && y >= 0 && y <= userSpaceSize;
+      while (isVisible(x,y)) {
+        [x,y] = [x+vx, y+vy];
+        [vx,vy] = [vx*10, vy*10]; //increase step size
+      }
+      return [x,y];
     }
   }
   

@@ -49,6 +49,7 @@ Each primitive has specific required attributes that must be in the object for i
     double_arrow: x1, y1, x2, y2
     rectangle: xmin, ymin, xmax, ymax
     circle: x, y, radius
+    triangle: x1, y1, x2, y2, x3, y3
 ```
 The **coordinates in all primitives must be between `0` and `100`**. Decimals values are OK.
 
@@ -92,7 +93,6 @@ Any attribute in the object that is none of the above. These are ignored and do 
 
 ## Maybe future features:
 
-- triangle primitive
 - text primitive
 - layer optional attribute (to override sequential drawing order)
 
