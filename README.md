@@ -76,11 +76,6 @@ Any attribute in the object that is none of the above. These are ignored and do 
 
 ## Bugs
 
-- Arrow head problems:
-  - are *centered* at the endpoint instead of *ending* there.
-  - Arrow heads overlap with the shaft, messing with opacity.
-  - The shaft of arrows with relatively small heads pop through the sides of the arrow.
-  - The shaft of double arrow has double opacity because it is drawn as two overlapping arrows.
 - Handle nested JSON objects when parsing a string input (currently, an unknown attribute with an object as a value breaks the primitive, but it should only give a warning that the attribute is not recognized and ignore it).
 
 ## Current To-do list before version 1.0:

@@ -89,10 +89,7 @@
   }
   primitives.double_arrow = {...primitives.segment};
   primitives.double_arrow.drawOn = (svgCanvas, obj) => {
-    DrawUtils.drawArrow(svgCanvas, obj);
-    let [x1, y1, x2, y2] = [obj.x1, obj.y1, obj.x2, obj.y2];
-    [obj.x1, obj.y1, obj.x2, obj.y2] = [x2, y2, x1, y1];
-    DrawUtils.drawArrow(svgCanvas, obj);
+    DrawUtils.drawDoubleArrow(svgCanvas, obj);
   }
   primitives.rectangle = new PrimitiveDef(
     {xmin: attrTypes.coord(), ymin: attrTypes.coord(), xmax: attrTypes.coord(), ymax: attrTypes.coord()},
@@ -160,9 +157,8 @@
       ray.rotate(rot, (x1+x2)/2, (y1+y2)/2); //rotate over the origin
     },
   
-    drawArrow: (svgCanvas, obj) => {
-      var body = svgCanvas.line(obj.x1, obj.y1, obj.x2, obj.y2);
-      body.marker('end', 5, 10, function(add) {
+    arrowHead: (svgCanvas, obj) => {
+      return svgCanvas.marker(5, 10, function(add) {
         add.path("M 0 0 L 10 5 L 0 10 z"); //isoceles triangle
         this.attr({
           viewBox: "0 0 10 10",
@@ -173,9 +169,23 @@
         });
         this.fill(obj.color);
       });
+    },
+
+    drawArrow: (svgCanvas, obj) => {
+      var body = svgCanvas.line(obj.x1, obj.y1, obj.x2, obj.y2);
+      var head = DrawUtils.arrowHead(svgCanvas, obj);
+      body.marker('end', head);
       DrawUtils.addCommonAttr(body, obj);
     },
   
+    drawDoubleArrow: (svgCanvas, obj) => {
+      var body = svgCanvas.line(obj.x1, obj.y1, obj.x2, obj.y2);
+      var head = DrawUtils.arrowHead(svgCanvas, obj);
+      body.marker('start', head);
+      body.marker('end', head);
+      DrawUtils.addCommonAttr(body, obj);
+    },
+    
     drawCircle: (svgCanvas, obj) => {
       var circ = svgCanvas.circle(2*obj.radius).center(obj.x,obj.y);
       DrawUtils.addCommonAttr(circ, obj);
