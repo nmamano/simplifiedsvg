@@ -81,9 +81,7 @@ Any attribute in the object that is none of the above. These are ignored and do 
 ## Current To-do list before version 1.0:
 
 - fix bugs above
-- add example 2 in sandbox
 - use it in the knight's tour project and link it from the README
-- add image from the sandbox to the README
 - add browser support notes to the README
 
 ## Maybe future features:
