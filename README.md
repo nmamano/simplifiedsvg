@@ -74,13 +74,8 @@ Any attribute in the object that is none of the above. These are ignored and do 
 
 # To-do Notes
 
-## Bugs
-
-- Handle nested JSON objects when parsing a string input (currently, an unknown attribute with an object as a value breaks the primitive, but it should only give a warning that the attribute is not recognized and ignore it).
-
 ## Current To-do list before version 1.0:
 
-- fix bugs above
 - use it in the knight's tour project and link it from the README
 - add browser support notes to the README
 
@@ -93,4 +88,4 @@ Any attribute in the object that is none of the above. These are ignored and do 
 
 - stylize invalid primitives in the input box with cursive
 (see https://stackoverflow.com/questions/142527/highlight-text-inside-of-a-textarea)
-- add cropping options to the interface
+- add cropping options to the interactive demo
